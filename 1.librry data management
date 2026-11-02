@@ -1,0 +1,51 @@
+# Library Management using Dictionary
+
+total_books = {
+    "M01": ["Book 1", "Book 2", "Book 3"],
+    "M02": ["Book 1", "Book 3"],
+    "M03": [],
+    "M04": ["Book 5"],
+    "M05": ["Book 4"],
+    "M06": ["Book 1", "Book 4"],
+    "M07": []
+}
+
+# 1. Average books borrowed
+total_members = len(total_books)
+total_books_borrowed = sum(
+    len(books) for books in total_books.values()
+)
+avg = total_books_borrowed / total_members
+print("Average of books borrowed:", avg)
+
+# 2. Count frequency of each book
+all_books = []
+
+for books in total_books.values():
+    all_books.extend(books)
+
+book_counts = {}
+
+for book in all_books:
+    if book in book_counts:
+        book_counts[book] += 1
+    else:
+        book_counts[book] = 1
+
+# 3. Most borrowed book
+most_borrowed = max(book_counts, key=book_counts.get)
+print("Most borrowed book:", most_borrowed)
+
+# 4. Least borrowed book
+least_borrowed = min(book_counts, key=book_counts.get)
+print("Least borrowed book:", least_borrowed)
+
+# 5. Members who borrowed zero books
+zero_borrowed = sum(
+    1 for books in total_books.values()
+    if len(books) == 0
+)
+print("Members with 0 borrowings:", zero_borrowed)
+
+# 6. Most frequently borrowed book (mode)
+print("Most frequently borrowed book(mode):", most_borrowed)
