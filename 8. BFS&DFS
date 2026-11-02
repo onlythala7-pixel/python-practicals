@@ -1,0 +1,87 @@
+# Graph Representation
+
+# Adjacency List
+adjacency_list = {
+    'A': ['B', 'C'],
+    'B': ['A', 'D'],
+    'C': ['A', 'D', 'E'],
+    'D': ['B', 'C', 'E'],
+    'E': ['C', 'D']
+}
+
+# Adjacency Matrix
+node_labels = ['A', 'B', 'C', 'D', 'E']
+
+node_to_idx = {
+    node: i for i, node in enumerate(node_labels)
+}
+
+adjacency_matrix = [
+    [0, 1, 1, 0, 0],  # A
+    [1, 0, 0, 1, 0],  # B
+    [1, 0, 0, 1, 1],  # C
+    [0, 1, 1, 0, 1],  # D
+    [0, 0, 1, 1, 0]   # E
+]
+
+
+# BFS Traversal using Adjacency List
+def bfs_traversal(adj_list, start_node):
+
+    visited = []
+    queue = [start_node]
+
+    while queue:
+        current = queue.pop(0)
+
+        if current not in visited:
+            visited.append(current)
+
+            for neighbor in adj_list[current]:
+                if neighbor not in visited:
+                    queue.append(neighbor)
+
+    return visited
+
+
+# DFS Traversal using Adjacency Matrix
+def dfs_traversal(adj_matrix, labels, start_node):
+
+    visited = []
+    stack = [start_node]
+
+    while stack:
+        current = stack.pop()
+
+        if current not in visited:
+            visited.append(current)
+
+            current_idx = node_to_idx[current]
+
+            # Visit lower alphabetical indices first
+            for neighbor_idx in range(len(labels)-1, -1, -1):
+
+                if adj_matrix[current_idx][neighbor_idx] == 1:
+
+                    neighbor_node = labels[neighbor_idx]
+
+                    if neighbor_node not in visited:
+                        stack.append(neighbor_node)
+
+    return visited
+
+
+# Execution and Results
+start = 'A'
+
+bfs_result = bfs_traversal(adjacency_list, start)
+
+dfs_result = dfs_traversal(
+    adjacency_matrix, node_labels, start
+)
+
+print("--- Graph Traversal Starting From Node", start, "---")
+
+print("BFS Sequence (Adjacency List):", bfs_result)
+
+print("DFS Sequence (Adjacency Matrix):", dfs_result)
