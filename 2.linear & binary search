@@ -1,0 +1,43 @@
+def linear_search(account_list, target_id):
+    """Scans the list sequentially from start to finish."""
+    for index in range(len(account_list)):
+        if account_list[index] == target_id:
+            return index  # Target found, return its index
+    return -1  # Target not found
+
+
+def binary_search(sorted_list, target_id):
+    """Searches a sorted list by repeatedly dividing the search interval in half."""
+    low = 0
+    high = len(sorted_list) - 1
+
+    while low <= high:
+        mid = (low + high) // 2
+
+        if sorted_list[mid] == target_id:
+            return mid  # Target found, return its index
+        elif sorted_list[mid] < target_id:
+            low = mid + 1  # Target is in the right half
+        else:
+            high = mid - 1  # Target is in the left half
+
+    return -1  # Target not found
+
+
+# --- Program Demonstration ---
+if __name__ == "__main__":
+
+    # Customer IDs must be sorted for Binary Search to function correctly
+    customer_ids = [1002, 1054, 2100, 3455, 4521, 5601, 7890]
+    search_target = 3455
+
+    print(f"Customer Database: {customer_ids}")
+    print(f"Searching for ID: {search_target}\n")
+
+    # 1. Execute Linear Search
+    linear_result = linear_search(customer_ids, search_target)
+    print(f"Linear Search ID found at index: {linear_result}")
+
+    # 2. Execute Binary Search
+    binary_result = binary_search(customer_ids, search_target)
+    print(f"Binary Search ID found at index: {binary_result}")
